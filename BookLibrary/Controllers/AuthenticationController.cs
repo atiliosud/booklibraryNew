@@ -1,8 +1,7 @@
 ﻿using BookLibrary.Commands;
-using BookLibrary.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OData.Query;
+using Microsoft.Extensions.Logging;
 
 namespace BookLibrary.Controllers
 {
@@ -11,15 +10,15 @@ namespace BookLibrary.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<AuthenticationController> _logger;
 
-
-        public AuthenticationController(IMediator mediator)
+        public AuthenticationController(IMediator mediator, ILogger<AuthenticationController> logger)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
+            _logger = logger;
         }
 
-        [HttpPost]
-        [Route("SignIn")]
+        [HttpPost("SignIn")] // Simplified route, combined with HTTP method for clarity
         public async Task<IActionResult> SignIn(SignIn command)
         {
             try
@@ -29,7 +28,8 @@ namespace BookLibrary.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while retrieving data." + ex.Message);
+                _logger.LogError(ex, "Error occurred during the sign-in process."); // Logging the error
+                return StatusCode(500, "An error occurred during the sign-in process. Please try again later.");
             }
         }
     }

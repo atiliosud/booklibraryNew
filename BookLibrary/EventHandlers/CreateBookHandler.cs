@@ -17,17 +17,25 @@ namespace BookLibrary.EventHandlers
 
         public async Task<Book> Handle(CreateBook request, CancellationToken cancellationToken)
         {
-            var book = new Book
+            try
             {
-                Title = request.Title,
-                Author = request.Author,
-                TotalCopies = request.TotalCopies,
-                CopiesInUse = request.CopiesInUse,
-                Type = request.Type,
-                Category = request.Category,
-            };
-            await repositoryBook.AddAsync(book);
-            return book;
+                var book = new Book
+                {
+                    Title = request.Title,
+                    Author = request.Author,
+                    TotalCopies = request.TotalCopies,
+                    CopiesInUse = request.CopiesInUse,
+                    Type = request.Type,
+                    Category = request.Category,
+                };
+
+                await repositoryBook.AddAsync(book, cancellationToken);
+                return book;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create the book.", ex);
+            }
         }
     }
 }

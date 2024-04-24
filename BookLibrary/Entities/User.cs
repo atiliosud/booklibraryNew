@@ -7,11 +7,11 @@ public partial class User
 
     [Required]
     [StringLength(255)]
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; } = null!;
 
     [Required]
     [StringLength(100)]
-    public string Password { get; set; } = null!;
+    public string? Password { get; set; } = null!;
 
     [Required]
     [StringLength(100)]

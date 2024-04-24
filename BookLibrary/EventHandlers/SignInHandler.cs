@@ -48,13 +48,11 @@ namespace BookLibrary.EventHandlers
             }
             catch (Exception ex)
             {
-                // Aqui você pode lidar com diferentes tipos de exceções e retornar respostas adequadas.
-                // Por exemplo, para uma exceção de usuário não encontrado, você pode retornar um objeto SignInResponseDTO com User = null e Token = null.
                 return new SignInResponseDTO
                 {
-                    User = null,
-                    Token = null,
-                    ErrorMessage = ex.Message // Adicione a mensagem de erro à resposta
+                    User = new User(), 
+                    Token = string.Empty, 
+                    ErrorMessage = ex.Message
                 };
             }
         }

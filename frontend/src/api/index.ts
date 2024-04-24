@@ -20,7 +20,7 @@ const ApiRoutes = {
   },
   addBook: async (book: Book): Promise<AxiosPromise> => {
     const token = localStorage.getItem("@token") || "";
-    return await axios.post("/Books/Create", book, {
+    return await axios.post("/Books", book, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },

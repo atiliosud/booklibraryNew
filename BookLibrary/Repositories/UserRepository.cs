@@ -66,12 +66,10 @@ namespace BookLibrary.Repositories
                 var user = await _context.Set<T>().FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
                 if (user != null)
                 {
-                    // Successful sign-in logic
-                    return _jwtService.Generate(user); // Generating JWT token
+                    return _jwtService.Generate(user);
                 }
                 else
                 {
-                    // Failed sign-in logic
                     throw new Exception("Invalid email or password.");
                 }
             }
